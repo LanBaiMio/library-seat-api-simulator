@@ -1,8 +1,24 @@
-// 获取图书馆座位数据并转换为扣子知识库格式
+// 获取图书馆座位数据并转换为扣子知识库格式 - Node.js 24兼容版本
 export default async function handler(req, res) {
   try {
+    // 设置CORS头
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    
+    // 处理OPTIONS请求
+    if (req.method === 'OPTIONS') {
+      res.status(200).end();
+      return;
+    }
+    
     // 获取原始数据
     const response = await fetch('https://kookaeu.github.io/library-seat-demo/');
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
     const originalData = await response.json();
     
     // 转换为扁平化格式，适合表格导入
@@ -38,9 +54,11 @@ export default async function handler(req, res) {
     });
     
   } catch (error) {
+    console.error('API Error:', error);
     res.status(500).json({
       error: "Failed to fetch library seat data",
-      message: error.message
+      message: error.message,
+      timestamp: new Date().toISOString()
     });
   }
 }
