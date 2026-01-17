@@ -1,0 +1,15 @@
+{
+  "name": "library-seat-api",
+  "version": "1.0.0",
+  "description": "Library seat data API for Coze knowledge base",
+  "main": "api/seats.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["library", "api", "coze", "vercel"],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": "18.x"
+  }
+}
